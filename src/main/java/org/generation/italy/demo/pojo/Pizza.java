@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
@@ -33,11 +35,16 @@ public class Pizza implements PriceableInt{
 	@Min(value = 0)
 	private int price;
 	
+	@ManyToOne
+	@JoinColumn(name = "promotion_id", nullable = false)
+	private Promotion promotion;
+	
 	public Pizza() {}
-	public Pizza(String name, String description, int price) {
+	public Pizza(String name, String description, int price, Promotion promotion) {
 		setName(name);
 		setPrice(price);
 		setDescription(description);
+		setPromotion(promotion);
 	}
 	
 	
@@ -66,9 +73,15 @@ public class Pizza implements PriceableInt{
 		this.price = price;
 	}
 	
+	public Promotion getPromotion() {
+		return promotion;
+	}
+	public void setPromotion(Promotion promotion) {
+		this.promotion = promotion;
+	}
 	@Override
 	public String toString() {
-		return id + " - " + name + "\n" + description + "\n" + price;
+		return id + " - " + name + "\n" + description + "\n" + price + "\n";
 	}
 	
 	
