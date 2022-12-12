@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Create</title>
+</head>
+<body>
+	<h1>Drink CREATE</h1>
+	
+	<div
+		th:if="${errors}"
+	>
+		ERROR:<br>
+		<ul>
+			<li
+				th:each="error : ${errors}"
+				th:object="${error}"
+			>
+				[[*{defaultMessage}]]
+			</li>
+		</ul>
+	</div>
+	
+	<form 
+		method="POST" 
+		action="/drink/store"
+		th:object="${drink}" >
+	
+		<label>Name</label>
+		<input type="text" name="name" th:field="*{name}">
+		<br>
+		<label>Description</label>
+		<input type="text" name="description" th:field="*{description}">
+		<br>
+		<label>Price</label>
+		<input type="number" name="price" th:field="*{price}">
+		<br>
+		<input type="submit" value="Add">
+	</form>
+</body>
+</html>

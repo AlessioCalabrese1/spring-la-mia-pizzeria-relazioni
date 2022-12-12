@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Update</title>
+</head>
+<body>
+	<h1>Drink UPDATE</h1>
+	<form 
+		method="POST" 
+		action="/drink/store"
+		th:object="${drink}" >
+		
+		<input type="number" name="id" th:field="*{id}" style="display:none">
+		
+		<label>Name</label>
+		<input type="text" name="name" th:field="*{name}">
+		<br>
+		<label>Description</label>
+		<input type="text" name="description" th:field="*{description}">
+		<br>
+		<label>Price</label>
+		<input type="number" name="price" th:field="*{price}">
+		<br>
+		<input type="submit" value="Add">
+	</form>
+</body>
+</html>
