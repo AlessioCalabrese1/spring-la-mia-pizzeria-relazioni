@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.Locale;
 
 import org.generation.italy.demo.pojo.Drink;
+import org.generation.italy.demo.pojo.Ingredient;
 import org.generation.italy.demo.pojo.Pizza;
 import org.generation.italy.demo.pojo.Promotion;
 import org.generation.italy.demo.serv.DrinkServ;
+import org.generation.italy.demo.serv.IngredientServ;
 import org.generation.italy.demo.serv.PizzaServ;
 import org.generation.italy.demo.serv.PromotionServ;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 	
 	@Autowired
 	private PromotionServ promoServ;
+	
+	@Autowired
+	private IngredientServ ingredientServ;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(SpringLaMiaPizzeriaCrudApplication.class, args);
@@ -54,9 +59,20 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		
 		System.out.println("-----------------------------------------------------------");
 		
-		Pizza p1 = new Pizza("Margherita", "é una margherita", 5, pro1);
+		Ingredient i1 = new Ingredient("Ingredient 1");
+		Ingredient i2 = new Ingredient("Ingredient 2");
+		
+		ingredientServ.save(i1);
+		ingredientServ.save(i2);
+		
+		List<Ingredient> ingredients = ingredientServ.all();
+		System.err.println(ingredients);
+		
+		System.out.println("-----------------------------------------------------------");
+		
+		Pizza p1 = new Pizza("Margherita", "é una margherita", 5, pro1, i1);
 		Pizza p2 = new Pizza("Rustica", "patatine e salsiccia", 7, pro1);
-		Pizza p3 = new Pizza("Siciliana", "margherita con melanzane", 8, pro3);
+		Pizza p3 = new Pizza("Siciliana", "margherita con melanzane", 8, pro3, i1, i2);
 		
 		pizzaServ.save(p1);
 		pizzaServ.save(p2);
@@ -97,3 +113,19 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 		//System.err.println(drinks);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

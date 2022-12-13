@@ -3,8 +3,12 @@ package org.generation.italy.demo.controller;
 import java.util.List;
 import java.util.Optional;
 
+import org.generation.italy.demo.pojo.Ingredient;
 import org.generation.italy.demo.pojo.Pizza;
+import org.generation.italy.demo.pojo.Promotion;
+import org.generation.italy.demo.serv.IngredientServ;
 import org.generation.italy.demo.serv.PizzaServ;
+import org.generation.italy.demo.serv.PromotionServ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +27,12 @@ public class PizzeriaController {
 	@Autowired
 	private PizzaServ pizzaServ;
 	
+	@Autowired
+	private IngredientServ ingredientServ;
+	
+	@Autowired
+	private PromotionServ promServ;
+	
 	@GetMapping
 	public String index(Model model) {
 		
@@ -36,6 +46,12 @@ public class PizzeriaController {
 	public String create(Model model) {
 		Pizza pizza = new Pizza();
 		model.addAttribute("pizza", pizza);
+		
+		List<Promotion> promotions = promServ.all();
+		model.addAttribute("promotions", promotions);
+		
+		List<Ingredient> ingredients = ingredientServ.all();
+		model.addAttribute("ingredients", ingredients);
 		
 		return "Create";
 	}

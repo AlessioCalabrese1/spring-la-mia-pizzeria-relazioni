@@ -25,11 +25,19 @@
 			[[*{price}]]
 			
 			<a class="btn btn-danger" th:href="@{/delete/{id}  (id=*{id}) }">Delete</a>
+			<br>
+			<ul>
+				<li th:each="ingredient : *{ingredients}"
+				th:object="${ingredient}">
+					[[*{name}]]
+				</li>
+			</ul>
 		</li>
 	</ul>
 	
 	<a th:href="@{/create}" class="btn btn-primary">Add new pizza</a>
 	<a th:href="@{/drink}" class="btn btn-primary">Go to drinks</a>
 	<a th:href="@{/priceable}" class="btn btn-primary">Go to priceable elements</a>
+	<a th:href="@{/ingredient}" class="btn btn-primary">Go to ingredients</a>
 </body>
 </html>

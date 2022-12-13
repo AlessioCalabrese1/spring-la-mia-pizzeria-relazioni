@@ -1,5 +1,8 @@
 package org.generation.italy.demo.pojo;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.generation.italy.demo.interfac.PriceableInt;
 
 import jakarta.persistence.Column;
@@ -9,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
@@ -39,12 +43,20 @@ public class Pizza implements PriceableInt{
 	@JoinColumn(name = "promotion_id", nullable = false)
 	private Promotion promotion;
 	
+	@ManyToMany
+	private List<Ingredient> ingredients;
+	
 	public Pizza() {}
 	public Pizza(String name, String description, int price, Promotion promotion) {
 		setName(name);
 		setPrice(price);
 		setDescription(description);
 		setPromotion(promotion);
+	}
+	public Pizza(String name, String description, int price, Promotion promotion, Ingredient...ingredients) {
+		this(name, description, price, promotion);
+		
+		setIngredients(Arrays.asList(ingredients));
 	}
 	
 	
@@ -78,6 +90,14 @@ public class Pizza implements PriceableInt{
 	}
 	public void setPromotion(Promotion promotion) {
 		this.promotion = promotion;
+	}
+	
+	
+	public List<Ingredient> getIngredients() {
+		return ingredients;
+	}
+	public void setIngredients(List<Ingredient> ingredients) {
+		this.ingredients = ingredients;
 	}
 	@Override
 	public String toString() {

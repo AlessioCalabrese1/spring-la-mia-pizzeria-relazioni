@@ -20,6 +20,32 @@
 		<label>Price</label>
 		<input type="number" name="price" th:field="*{price}">
 		<br>
+		
+		<select name="promotion">
+			<option
+				th:each="promotion : ${promotions}"
+				th:object="${promotion}"
+				
+				th:value="*{id}"
+				th:field="${pizza.promotion}"
+			>
+				[[*{title}]]
+			</option>
+		</select>
+		
+		<div
+			th:each="ingredient : ${ingredients}"
+			th:object="${ingredient}"
+		>
+			<input
+				type="checkbox"
+				name="books"
+				
+				th:value="*{id}"
+				th:field="${pizza.ingredients}"
+			>
+			<label>[[*{name}]]</label>
+		</div>
 		<input type="submit" value="Add">
 	</form>
 </body>
