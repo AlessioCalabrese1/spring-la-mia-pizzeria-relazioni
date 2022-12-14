@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 
 @Controller
@@ -54,6 +55,16 @@ public class IngredientController {
 	@PostMapping("store")
 	public String store(@Valid Ingredient ingredient) {
 		
+		Optional<Ingredient> ing = ingredientServ.findById(ingredient.getId());
+		
+		if (!ing.isEmpty()) {
+			Ingredient ingr = ing.get();
+			for (Pizza pizza : ingr.getPizzas()) {
+				pizza.getIngredients().remove(ingr);
+				//pizzaServ.save(pizza);
+			}
+		}
+		
 		List<Pizza> pizzas = ingredient.getPizzas();
 		if (pizzas != null) {
 			for (Pizza pizza : pizzas) {
@@ -68,14 +79,25 @@ public class IngredientController {
 	
 	@GetMapping("update/{id}")
 	public String update(Model model, @PathVariable("id") int id) {
-		Optional<Ingredient> ingredient = ingredientServ.findById(id);
-		model.addAttribute("ingredient", ingredient);
+		Ingredient ing = ingredientServ.findById(id).get();
+		model.addAttribute("ingredient", ing);
+		
+		
+		List<Pizza> pizzas = pizzaServ.all();
+		model.addAttribute("pizzas", pizzas);
 		
 		return "Ingredient-Create";
 	}
 	
 	@GetMapping("delete/{id}")
+	@Transactional
 	public String delete(@PathVariable("id") int id) {
+		Ingredient ing = ingredientServ.findById(id).get(); 
+		for (Pizza pizza : ing.getPizzas()) {
+			pizza.getIngredients().remove(ing);
+			pizzaServ.save(pizza);
+		}
+		
 		ingredientServ.deleteById(id);
 		
 		return "redirect:/ingredient";

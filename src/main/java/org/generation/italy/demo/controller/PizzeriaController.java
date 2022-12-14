@@ -69,6 +69,12 @@ public class PizzeriaController {
 		Optional<Pizza> pizza = pizzaServ.findPizzaById(id);
 		model.addAttribute("pizza", pizza);
 		
+		List<Promotion> promotions = promServ.all();
+		model.addAttribute("promotions", promotions);
+		
+		List<Ingredient> ingredients = ingredientServ.all();
+		model.addAttribute("ingredients", ingredients);
+		
 		return "Update";
 	}
 	

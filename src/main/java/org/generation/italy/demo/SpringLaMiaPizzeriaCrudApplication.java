@@ -88,7 +88,7 @@ public class SpringLaMiaPizzeriaCrudApplication implements CommandLineRunner {
 			System.err.println(promotion.getPizzas());
 		}
 		
-		promoServ.deleteById(1);
+		//promoServ.deleteById(1);
 		
 		promotions = promoServ.allWPizzas();
 		for (Promotion promotion : promotions) {
